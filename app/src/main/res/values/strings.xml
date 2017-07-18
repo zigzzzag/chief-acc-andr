@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Chief-acc</string>
+
+    <string-array name="testStringArray">
+        <item>Gogi</item>
+        <item>Max</item>
+        <item>Sanya B</item>
+        <item>Sanya F</item>
+        <item>Shirz</item>
+        <item>Serega</item>
+    </string-array>
+</resources>
