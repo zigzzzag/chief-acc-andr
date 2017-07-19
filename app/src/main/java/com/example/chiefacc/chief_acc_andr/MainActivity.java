@@ -13,13 +13,16 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.chiefacc.chief_acc_andr.personListView.PersonItem;
+import com.example.chiefacc.chief_acc_andr.personListView.PersonListAdapter;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private final List<String> persons = new ArrayList<>();
-    private ArrayAdapter<String> personsAdapter;
+    private final List<PersonItem> persons = new ArrayList<>();
+    private PersonListAdapter personsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +30,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         final ListView personsListView = (ListView) findViewById(R.id.personsList);
-        personsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, persons);
+
+        ArrayList<PersonItem> test = new ArrayList<>();//todo remove
+        test.add(new PersonItem("p1", 123));
+        test.add(new PersonItem("p2", 123));
+        test.add(new PersonItem("p3", 123));
+        test.add(new PersonItem("p4", 123));
+        personsAdapter = new PersonListAdapter(this,test);
         personsListView.setAdapter(personsAdapter);
 
         final Button addNewPersonButton = (Button) findViewById(R.id.addNewPerson);
@@ -54,8 +63,9 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         final String newPersonName = inputName.getText().toString();
+                        final String newPersonSum = inputSum.getText().toString();
 
-                        persons.add(newPersonName);
+                        persons.add(new PersonItem(newPersonName, Double.valueOf(newPersonSum)));
                         personsAdapter.notifyDataSetChanged();
 
                         Toast.makeText(getApplicationContext(), "Welcome, " + newPersonName + "!",
