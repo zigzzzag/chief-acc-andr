@@ -1,16 +1,21 @@
 package com.example.chiefacc.chief_acc_andr.personListView;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.chiefacc.chief_acc_andr.R;
+import com.example.chiefacc.chief_acc_andr.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,9 +80,114 @@ public class PersonListAdapter extends ArrayAdapter<PersonItem> implements Adapt
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-        final PersonItem pi = (PersonItem) adapterView.getItemAtPosition(position);
-        final String msg = String.format("Hello, %s%s", pi.getName(),
-                pi.getSum() < 100 ? " Нищеброд" : "");
-        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+        final PersonItem personItem = (PersonItem) adapterView.getItemAtPosition(position);
+        personDialog(personItem).show();
+    }
+
+    public AlertDialog personDialog() {
+        return personDialog(null);
+    }
+
+    private AlertDialog personDialog(final PersonItem personItem) {
+
+        final AlertDialog dialog = new AlertDialog.Builder(context)
+                .setTitle("Add new person")
+                .setPositiveButton(android.R.string.ok, null)
+                .setNegativeButton(android.R.string.cancel, null)
+                .create();
+
+        final LinearLayout ll = new LinearLayout(context);
+        ll.setOrientation(LinearLayout.VERTICAL);
+
+        final EditText inputName = new EditText(context);
+        inputName.setHint("Name");
+        ll.addView(inputName);
+
+        final EditText inputSum = new EditText(context);
+        inputSum.setHint("Sum");
+        inputSum.setText("0");
+        ll.addView(inputSum);
+
+        if (personItem != null) {
+            dialog.setTitle("Edit person");
+            inputName.setText(personItem.getName());
+            inputSum.setText(String.valueOf(personItem.getSum()));
+        }
+
+        dialog.setView(ll);
+
+        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(final DialogInterface dialog) {
+                Button button = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        final String newPersonName = inputName.getText().toString();
+                        final String newPersonSum = inputSum.getText().toString();
+
+                        final String errorPersonName = errorPersonName(personItem, newPersonName);
+                        if (errorPersonName != null) {
+                            inputName.setError(errorPersonName);
+                            return;
+                        }
+
+                        final String errorPersonSum = errorPersonSum(newPersonSum);
+                        if (errorPersonSum != null) {
+                            inputSum.setError(errorPersonSum);
+                            return;
+                        }
+
+                        if (personItem == null) {
+                            add(new PersonItem(newPersonName, Double.valueOf(newPersonSum)));
+                        } else {
+                            personItem.setName(newPersonName);
+                            personItem.setSum(Double.valueOf(newPersonSum));
+                        }
+                        notifyDataSetChanged();
+                        dialog.dismiss();
+
+                        Toast.makeText(context, "Welcome, " + newPersonName + "!",
+                                Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+        });
+
+        return dialog;
+    }
+
+    //todo remake with enum
+    private String errorPersonName(PersonItem editedPersonItem, String newPersonName) {
+        if (StringUtils.isBlank(newPersonName)) {
+            return "Should not be empty!";
+        }
+
+        if (editedPersonItem == null) {
+            return null;
+        }
+
+        final List<PersonItem> personsWithoutCurrent = new ArrayList<>(persons);
+        personsWithoutCurrent.remove(editedPersonItem);
+        for (PersonItem personItem : personsWithoutCurrent) {
+            if (newPersonName.equals(personItem.getName())) {
+                return "With that name already exists!";
+            }
+        }
+
+        return null;
+    }
+
+    //todo remake with enum
+    private String errorPersonSum(String personSum) {
+        try {
+            if (Double.valueOf(personSum) < 0) {
+                return "Must be a non negative number!";
+            }
+        } catch (NumberFormatException e) {
+            return "Must be a non negative number!";
+        }
+
+        return null;
     }
 }
