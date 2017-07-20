@@ -8,18 +8,22 @@
         android:id="@+id/personName"
         android:layout_width="210dp"
         android:layout_height="match_parent"
-        android:text="TextView" />
+        android:text="Gogi"
+        android:focusable="false"/>
 
     <TextView
         android:id="@+id/personSum"
         android:layout_width="129dp"
         android:layout_height="44dp"
-        android:text="TextView" />
+        android:inputType="number"
+        android:text="1250"
+        android:focusable="false"/>
 
     <Button
         android:id="@+id/removeItemButton"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="right"
+        android:focusable="false"
         android:text="D" />
 </LinearLayout>

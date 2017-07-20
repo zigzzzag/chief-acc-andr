@@ -5,8 +5,6 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -17,11 +15,9 @@ import com.example.chiefacc.chief_acc_andr.personListView.PersonItem;
 import com.example.chiefacc.chief_acc_andr.personListView.PersonListAdapter;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private final List<PersonItem> persons = new ArrayList<>();
     private PersonListAdapter personsAdapter;
 
     @Override
@@ -32,12 +28,14 @@ public class MainActivity extends AppCompatActivity {
         final ListView personsListView = (ListView) findViewById(R.id.personsList);
 
         ArrayList<PersonItem> test = new ArrayList<>();//todo remove
-        test.add(new PersonItem("p1", 123));
+        test.add(new PersonItem("p1", 99));
         test.add(new PersonItem("p2", 123));
         test.add(new PersonItem("p3", 123));
         test.add(new PersonItem("p4", 123));
-        personsAdapter = new PersonListAdapter(this,test);
+
+        personsAdapter = new PersonListAdapter(this, R.layout.person_item, test);
         personsListView.setAdapter(personsAdapter);
+        personsListView.setOnItemClickListener(personsAdapter);
 
         final Button addNewPersonButton = (Button) findViewById(R.id.addNewPerson);
         addNewPersonButton.setOnClickListener(new View.OnClickListener() {
@@ -55,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
                 final EditText inputSum = new EditText(MainActivity.this);
                 inputSum.setHint("Sum");
+                inputSum.setText("0");
                 ll.addView(inputSum);
 
                 alert.setView(ll);
@@ -65,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
                         final String newPersonName = inputName.getText().toString();
                         final String newPersonSum = inputSum.getText().toString();
 
-                        persons.add(new PersonItem(newPersonName, Double.valueOf(newPersonSum)));
+                        personsAdapter.add(new PersonItem(newPersonName, Double.valueOf(newPersonSum)));
                         personsAdapter.notifyDataSetChanged();
 
                         Toast.makeText(getApplicationContext(), "Welcome, " + newPersonName + "!",
@@ -80,15 +79,6 @@ public class MainActivity extends AppCompatActivity {
                 });
 
                 alert.show();
-            }
-        });
-
-
-        personsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                String txt = adapterView.getItemAtPosition(position).toString();
-                Toast.makeText(MainActivity.this, txt, Toast.LENGTH_SHORT).show();
             }
         });
     }
