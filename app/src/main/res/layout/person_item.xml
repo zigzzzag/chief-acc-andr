@@ -14,8 +14,7 @@
     <TextView
         android:id="@+id/personSum"
         android:layout_width="129dp"
-        android:layout_height="44dp"
-        android:inputType="number"
+        android:layout_height="match_parent"
         android:text="1250"
         android:focusable="false"/>
 

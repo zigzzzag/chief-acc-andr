@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,6 +58,17 @@ public class PersonListAdapter extends ArrayAdapter<PersonItem> implements Adapt
 
         ((TextView) view.findViewById(R.id.personName)).setText(personItem.getName());
         ((TextView) view.findViewById(R.id.personSum)).setText(Double.toString(personItem.getSum()));
+
+        final Button removeItemButton = view.findViewById(R.id.removeItemButton);
+        removeItemButton.setTag(position);
+        removeItemButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int index = (int) view.getTag();
+                persons.remove(index);
+                notifyDataSetChanged();
+            }
+        });
 
         return view;
     }
