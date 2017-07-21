@@ -17,8 +17,13 @@ import android.widget.Toast;
 import com.example.chiefacc.chief_acc_andr.R;
 import com.example.chiefacc.chief_acc_andr.StringUtils;
 
+import org.chiefacc.core.Person;
+
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.PriorityQueue;
+import java.util.Set;
 
 public class PersonListAdapter extends ArrayAdapter<PersonItem> implements AdapterView.OnItemClickListener {
 
@@ -78,11 +83,20 @@ public class PersonListAdapter extends ArrayAdapter<PersonItem> implements Adapt
         return view;
     }
 
+    public Set<Person> getConvertedPersonsItem() {
+        final Set<Person> result = new HashSet<>();
+        for (PersonItem personItem : persons) {
+            result.add(new Person(personItem.getName(), personItem.getSum()));
+        }
+        return result;
+    }
+
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
         final PersonItem personItem = (PersonItem) adapterView.getItemAtPosition(position);
         personDialog(personItem).show();
     }
+
 
     public AlertDialog personDialog() {
         return personDialog(null);
