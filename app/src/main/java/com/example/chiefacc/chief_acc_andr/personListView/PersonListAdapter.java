@@ -67,7 +67,7 @@ public class PersonListAdapter extends ArrayAdapter<PersonItem> implements Adapt
         final PersonItem personItem = getItem(position);
 
         ((TextView) view.findViewById(R.id.personName)).setText(personItem.getName());
-        ((TextView) view.findViewById(R.id.personSum)).setText(Double.toString(personItem.getSum()));
+        ((TextView) view.findViewById(R.id.personSum)).setText(personItem.getSum());
 
         final Button removeItemButton = view.findViewById(R.id.removeItemButton);
         removeItemButton.setTag(position);
@@ -152,11 +152,11 @@ public class PersonListAdapter extends ArrayAdapter<PersonItem> implements Adapt
                             return;
                         }
 
-                        if (personItem == null) {
-                            add(new PersonItem(newPersonName, Double.valueOf(newPersonSum)));
+                        if (personItem == null) {//todo check that string is number
+                            add(new PersonItem(newPersonName, newPersonSum));
                         } else {
                             personItem.setName(newPersonName);
-                            personItem.setSum(Double.valueOf(newPersonSum));
+                            personItem.setSum(newPersonSum);
                         }
                         notifyDataSetChanged();
                         dialog.dismiss();

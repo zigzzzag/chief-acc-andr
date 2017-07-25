@@ -30,12 +30,12 @@ public class MainActivity extends AppCompatActivity {
         final ListView personsListView = (ListView) findViewById(R.id.personsList);
 
         ArrayList<PersonItem> test = new ArrayList<>();//todo remove
-        test.add(new PersonItem("Gogi", 200));
-        test.add(new PersonItem("Shirz", 1000));
-        test.add(new PersonItem("Serega", 850));
-        test.add(new PersonItem("Sanya B", 750));
-        test.add(new PersonItem("Sanya F", 500));
-        test.add(new PersonItem("Max", 0));
+        test.add(new PersonItem("Gogi", "200"));
+        test.add(new PersonItem("Shirz", "1000"));
+        test.add(new PersonItem("Serega", "850"));
+        test.add(new PersonItem("Sanya B", "750"));
+        test.add(new PersonItem("Sanya F", "500"));
+        test.add(new PersonItem("Max", "0"));
 
         personsAdapter = new PersonListAdapter(this, R.layout.person_item, test);
         personsListView.setAdapter(personsAdapter);

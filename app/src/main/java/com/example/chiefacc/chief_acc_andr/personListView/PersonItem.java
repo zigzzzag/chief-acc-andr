@@ -3,9 +3,9 @@ package com.example.chiefacc.chief_acc_andr.personListView;
 public class PersonItem {
 
     private String name;
-    private double sum;
+    private String sum;
 
-    public PersonItem(String name, double sum) {
+    public PersonItem(String name, String sum) {
         this.name = name;
         this.sum = sum;
     }
@@ -18,11 +18,11 @@ public class PersonItem {
         this.name = name;
     }
 
-    public double getSum() {
+    public String getSum() {
         return sum;
     }
 
-    public void setSum(double sum) {
+    public void setSum(String sum) {
         this.sum = sum;
     }
 }
