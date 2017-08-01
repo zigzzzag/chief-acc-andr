@@ -6,22 +6,29 @@
 
     <TextView
         android:id="@+id/personName"
-        android:layout_width="210dp"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
+        android:layout_weight=".50"
         android:text="Gogi"
         android:focusable="false"/>
 
     <TextView
         android:id="@+id/personSum"
-        android:layout_width="129dp"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
+        android:layout_weight=".30"
         android:text="1250"
         android:focusable="false"/>
 
     <Button
         android:id="@+id/removeItemButton"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
+        android:layout_weight=".20"
+        android:layout_marginRight="2dp"
+        android:layout_marginBottom="2dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginLeft="2dp"
         android:layout_gravity="right"
         android:focusable="false"
         android:text="D" />
