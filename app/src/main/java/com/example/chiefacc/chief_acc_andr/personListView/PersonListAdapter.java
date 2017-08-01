@@ -3,6 +3,7 @@ package com.example.chiefacc.chief_acc_andr.personListView;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,7 +68,7 @@ public class PersonListAdapter extends ArrayAdapter<PersonItem> implements Adapt
         final PersonItem personItem = getItem(position);
 
         ((TextView) view.findViewById(R.id.personName)).setText(personItem.getName());
-        ((TextView) view.findViewById(R.id.personSum)).setText(personItem.getSum());
+        ((TextView) view.findViewById(R.id.personSum)).setText(String.valueOf(personItem.getSum()));
 
         final Button removeItemButton = view.findViewById(R.id.removeItemButton);
         removeItemButton.setTag(position);
@@ -118,6 +119,7 @@ public class PersonListAdapter extends ArrayAdapter<PersonItem> implements Adapt
         ll.addView(inputName);
 
         final EditText inputSum = new EditText(context);
+        inputSum.setInputType(InputType.TYPE_CLASS_NUMBER);
         inputSum.setHint("Sum");
         inputSum.setText("0");
         ll.addView(inputSum);
@@ -152,11 +154,11 @@ public class PersonListAdapter extends ArrayAdapter<PersonItem> implements Adapt
                             return;
                         }
 
-                        if (personItem == null) {//todo check that string is number
-                            add(new PersonItem(newPersonName, newPersonSum));
+                        if (personItem == null) {
+                            add(new PersonItem(newPersonName, Double.valueOf(newPersonSum)));
                         } else {
                             personItem.setName(newPersonName);
-                            personItem.setSum(newPersonSum);
+                            personItem.setSum(Double.valueOf(newPersonSum));
                         }
                         notifyDataSetChanged();
                         dialog.dismiss();

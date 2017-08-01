@@ -11,11 +11,13 @@ import android.widget.TextView;
 import com.example.chiefacc.chief_acc_andr.personListView.PersonItem;
 import com.example.chiefacc.chief_acc_andr.personListView.PersonListAdapter;
 
-import org.chiefacc.core.PersonPair;
+import org.chiefacc.core.Person;
+import org.chiefacc.core.PersonPairPay;
 import org.chiefacc.core.SumDistributor;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,12 +32,12 @@ public class MainActivity extends AppCompatActivity {
         final ListView personsListView = (ListView) findViewById(R.id.personsList);
 
         ArrayList<PersonItem> test = new ArrayList<>();//todo remove
-        test.add(new PersonItem("Gogi", "200"));
-        test.add(new PersonItem("Shirz", "1000"));
-        test.add(new PersonItem("Serega", "850"));
-        test.add(new PersonItem("Sanya B", "750"));
-        test.add(new PersonItem("Sanya F", "500"));
-        test.add(new PersonItem("Max", "0"));
+        test.add(new PersonItem("Gogi", 200));
+        test.add(new PersonItem("Shirz", 1000));
+        test.add(new PersonItem("Serega", 850));
+        test.add(new PersonItem("Sanya B", 750));
+        test.add(new PersonItem("Sanya F", 500));
+        test.add(new PersonItem("Max", 0));
 
         personsAdapter = new PersonListAdapter(this, R.layout.person_item, test);
         personsListView.setAdapter(personsAdapter);
@@ -53,12 +55,18 @@ public class MainActivity extends AppCompatActivity {
         calculateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final Collection<PersonPair> calculatedResult = new SumDistributor().distribute(
-                        personsAdapter.getConvertedPersonsItem());
+                final SumDistributor sd = new SumDistributor();
+                final Set<Person> persons = personsAdapter.getConvertedPersonsItem();
+
+                final StringBuilder sb = new StringBuilder();
+                sb.append("Average check: ").append(sd.averageFromPersons(persons))
+                        .append(NEW_LINE).append(NEW_LINE);
+
+                final Collection<PersonPairPay> calculatedResult = sd.distribute(
+                        persons);
 
                 //todo move into calcResult
-                final StringBuilder sb = new StringBuilder();
-                for (PersonPair pp : calculatedResult) {
+                for (PersonPairPay pp : calculatedResult) {
                     sb.append(pp).append(NEW_LINE);
                 }
 
