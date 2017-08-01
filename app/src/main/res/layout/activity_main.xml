@@ -8,8 +8,8 @@
 
     <Button
         android:id="@+id/addNewPerson"
-        android:layout_width="368dp"
-        android:layout_height="41dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
@@ -25,8 +25,8 @@
 
     <Button
         android:id="@+id/calculateButton"
-        android:layout_width="369dp"
-        android:layout_height="38dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:text="Calculate"
@@ -40,8 +40,8 @@
 
     <ListView
         android:id="@+id/personsList"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
